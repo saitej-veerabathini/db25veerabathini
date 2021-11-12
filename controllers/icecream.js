@@ -37,7 +37,7 @@ exports.icecream_create_post = async function (req, res) {
     // We are looking for a body, since POST does not have query parameters.
     // Even though bodies can be in many different formats, we will be picky
     // and require that it be a json object
-    // {"costume_type":"goat", "cost":12, "size":"large"}
+    // {"icecream_type":"goat", "cost":12, "size":"large"}
     document.brand = req.body.brand; 
     document.flavour = req.body.flavour; 
     document.cost = req.body.cost;
@@ -57,6 +57,34 @@ exports.icecream_delete = function(req, res) {
 }; 
  
 // Handle icecream update form on PUT. 
-exports.icecream_update_put = function(req, res) { 
-    res.send('NOT IMPLEMENTED: icecream update PUT' + req.params.id); 
+exports.icecream_update_put = async function(req, res) { 
+    console.log(`update on id ${req.params.id} with body 
+${JSON.stringify(req.body)}`) 
+    try { 
+        let toUpdate = await icecream.findById( req.params.id) 
+        // Do updates of properties 
+        if(req.body.icecream_type)  
+               toUpdate.brand = req.body.brand; 
+        if(req.body.cost) toUpdate.cost = req.body.cost; 
+        if(req.body.size) toUpdate.size = req.body.size; 
+        let result = await toUpdate.save(); 
+        console.log("Sucess " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": ${err}: Update for id ${req.params.id} 
+failed`); 
+    } 
+}; 
+
+// for a specific icecream. 
+exports.icecream_detail = async function(req, res) { 
+    console.log("detail"  + req.params.id) 
+    try { 
+        result = await icecream.findById( req.params.id) 
+        res.send(result) 
+    } catch (error) { 
+        res.status(500) 
+        res.send(`{"error": document for id ${req.params.id} not found`); 
+    } 
 }; 
