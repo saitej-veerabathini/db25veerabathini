@@ -117,7 +117,7 @@ exports.icecream_detail = async function(req, res) {
 exports.icecream_create_Page =  function(req, res) { 
     console.log("create view") 
     try{ 
-        res.render('icecreamcreate', { title: 'icecream Create'}); 
+        res.render('icecreamcreate', { title: 'Icecream Create'}); 
     } 
     catch(err){ 
         res.status(500) 

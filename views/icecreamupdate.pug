@@ -1,8 +1,11 @@
 extends layout 
  
 block content 
-  h1= title 
-    - let icecreamid = toShow._id 
+ h1= title 
+ if (toShow == null) 
+    h2 No instance to update
+ else  
+  - let icecreamid = toShow._id 
   - let icecreambrand = toShow.brand
   - let icecreamcost = toShow.cost 
   - let icecreamflavour = toShow.flavour
